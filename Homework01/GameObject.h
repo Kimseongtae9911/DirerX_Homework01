@@ -5,9 +5,9 @@
 class CGameObject
 {
 private:
-	std::unique_ptr<CGameObject> m_pObjectCollided = NULL;
+	CGameObject* m_pObjectCollided = NULL;
 
-	DWORD m_dwColor = RGB(255, 0, 0);
+	DWORD m_dwColor = RGB(255, 0, 0);	
 
 private:
 	XMFLOAT4X4 m_xmf4x4World = Matrix4x4::Identity();
@@ -68,7 +68,7 @@ public:
 	XMFLOAT3 GetUp();
 	XMFLOAT3 GetRight();
 
-	CGameObject* GetObjectCollided() { return m_pObjectCollided.get(); }
+	CGameObject* GetObjectCollided() { return m_pObjectCollided; }
 	BoundingOrientedBox& GetBOBox() { return m_xmOOBB; }
 
 	void SetWorldMatrix(XMFLOAT4X4 xmf4x4World) { m_xmf4x4World = xmf4x4World; }

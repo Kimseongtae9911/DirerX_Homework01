@@ -2,9 +2,9 @@
 #include "Scene.h"
 #include "GraphicsPipeline.h"
 
-CScene::CScene(std::unique_ptr<CPlayer> pPlayer)
+CScene::CScene(CPlayer* pPlayer)
 {
-	m_pPlayer = std::move(pPlayer);
+	m_pPlayer = pPlayer;
 }
 
 CScene::~CScene()
@@ -26,8 +26,8 @@ void CScene::ReleaseObjects()
 
 void CScene::CheckObjectByObjectCollisions()
 {
-	/*for (int i = 0; i < m_nObjects; i++)
-		m_ppObjects[i]->GetObjectCollided() = NULL;*/
+	for (int i = 0; i < m_nObjects; i++)
+		m_ppObjects[i]->GetObjectCollided() = NULL;
 
 	for (int i = 0; i < m_nObjects; i++)
 	{

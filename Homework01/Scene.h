@@ -6,16 +6,14 @@
 class CScene
 {
 public:
-	CScene(std::unique_ptr<CPlayer> pPlayer);
+	CScene(CPlayer* pPlayer);
 	virtual ~CScene();
 
 private:
 	int	m_nObjects = 0;
-	//CGameObject** m_ppObjects = NULL;
-	std::unique_ptr<CGameObject* []> m_ppObjects = NULL;
-
-	//CPlayer* m_pPlayer = NULL;
-	std::unique_ptr<CPlayer> m_pPlayer = NULL;
+	CGameObject** m_ppObjects = NULL;
+	
+	CPlayer* m_pPlayer = NULL;
 
 #ifdef _WITH_DRAW_AXIS
 	CGameObject* m_pWorldAxis = NULL;
