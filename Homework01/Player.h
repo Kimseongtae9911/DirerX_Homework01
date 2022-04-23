@@ -6,7 +6,7 @@
 class CPlayer : public CGameObject
 {
 private:
-	std::unique_ptr<CCamera> m_pCamera = NULL;
+	CCamera* m_pCamera = NULL;
 
 private:
 	XMFLOAT3 m_xmf3Position = XMFLOAT3(0.0f, 0.0f, 0.0f);
@@ -49,9 +49,8 @@ public:
 	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
 
 public:
-	//void SetCamera(CCamera* pCamera) { m_pCamera = pCamera; }
-	void SetCamera(std::unique_ptr<CCamera> pCamera) { m_pCamera = std::move(pCamera); }
-	CCamera* GetCamera() { return m_pCamera.get(); }
+	void SetCamera(CCamera* pCamera) { m_pCamera = pCamera; }
+	CCamera* GetCamera() { return m_pCamera; }
 
 public:
 	XMFLOAT3& GetPos() { return m_xmf3Position; }
@@ -61,3 +60,13 @@ public:
 	XMFLOAT3& GetCameraOffset() { return m_xmf3CameraOffset; }
 };
 
+class CRollerCoasterPlayer : public CPlayer
+{
+public:
+	CRollerCoasterPlayer();
+	virtual ~CRollerCoasterPlayer();
+
+	virtual void OnUpdateTransform();
+	virtual void Animate(float fElapsedTime);
+	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
+};

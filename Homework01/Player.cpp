@@ -7,6 +7,8 @@ CPlayer::CPlayer()
 
 CPlayer::~CPlayer()
 {
+	if (m_pCamera)
+		delete m_pCamera;
 }
 
 void CPlayer::SetPosition(float x, float y, float z)
@@ -133,4 +135,32 @@ void CPlayer::Animate(float fElapsedTime)
 void CPlayer::Render(HDC hDCFrameBuffer, CCamera* pCamera)
 {
 	CGameObject::Render(hDCFrameBuffer, pCamera);
+}
+
+CRollerCoasterPlayer::CRollerCoasterPlayer()
+{
+}
+
+CRollerCoasterPlayer::~CRollerCoasterPlayer()
+{
+}
+
+void CRollerCoasterPlayer::OnUpdateTransform()
+{
+	CPlayer::OnUpdateTransform();
+
+	XMMATRIX XMRollPitchYaw = XMMatrixRotationRollPitchYaw(XMConvertToRadians(90.0f), 0.0f, 0.0f);
+	XMFLOAT4X4 xmf4x4world = GetWorldMatrix();
+
+	SetWorldMatrix(Matrix4x4::Multiply(XMRollPitchYaw, xmf4x4world));	
+}
+
+void CRollerCoasterPlayer::Animate(float fElapsedTime)
+{
+	CPlayer::Animate(fElapsedTime);
+}
+
+void CRollerCoasterPlayer::Render(HDC hDCFrameBuffer, CCamera* pCamera)
+{
+	CPlayer::Render(hDCFrameBuffer, pCamera);
 }

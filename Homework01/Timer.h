@@ -16,8 +16,6 @@ private:
 
 	__int64	m_PerformanceFrequencyPerSec;
 
-	//float m_fFrameTime[MAX_SAMPLE_COUNT] = {};
-
 	std::array<float, MAX_SAMPLE_COUNT> m_fFrameTime{};
 
 	ULONG m_nSampleCount;

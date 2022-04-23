@@ -25,6 +25,18 @@ void CGameFramework::OnDestroy()
         ::DeleteDC(m_hDCFrameBuffer);
 }
 
+void CGameFramework::ReleaseObjects()
+{
+    if (m_pScene)
+    {
+        m_pScene->ReleaseObjects();
+        delete m_pScene;
+    }
+
+    if (m_pPlayer)
+        delete m_pPlayer;
+}
+
 void CGameFramework::BuildFrameBuffer()
 {
     ::GetClientRect(m_hWnd, &m_rcClient);
@@ -69,22 +81,22 @@ void CGameFramework::BuildObjects()
 
     pCamera->GenerateOrthographicProjectionMatrix(1.01f, 50.0f, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT);
 
-   /* CAirplaneMesh* pAirplaneMesh = new CAirplaneMesh(6.0f, 6.0f, 1.0f);
+    CRollerCoasterMesh* pRollerCMesh = new CRollerCoasterMesh(4.0f, 4.0f, 4.0f);
 
-    m_pPlayer = new CAirplanePlayer();
+
+    m_pPlayer = new CRollerCoasterPlayer();
     m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
-    m_pPlayer->SetMesh(pAirplaneMesh);
-    m_pPlayer->SetColor(RGB(0, 0, 255));
+    m_pPlayer->SetMesh(pRollerCMesh);
+    m_pPlayer->SetColor(RGB(255, 0, 0));
     m_pPlayer->SetCamera(pCamera);
-    m_pPlayer->SetCameraOffset(XMFLOAT3(0.0f, 5.0f, -15.0f));
+    XMFLOAT3 xmf3Camoffset = { 0.0f, 6.0f, -15.0f };
+    m_pPlayer->SetCameraOffset(xmf3Camoffset);
 
     m_pScene = new CScene(m_pPlayer);
-    m_pScene->BuildObjects();*/
+    m_pScene->BuildObjects();
 }
 
-void CGameFramework::ReleaseObjects()
-{
-}
+
 
 void CGameFramework::ProcessInput()
 {
@@ -105,7 +117,11 @@ void CGameFramework::FrameAdvance()
 
     AnimateObjects();
 
-    ClearFrameBuffer(RGB(125, 20, 255));
+    ClearFrameBuffer(RGB(255, 255, 255));
+
+    CCamera* pCamera = m_pPlayer->GetCamera();
+    if (m_pScene) 
+        m_pScene->Render(m_hDCFrameBuffer, pCamera);
 
     PresentFrameBuffer();
 

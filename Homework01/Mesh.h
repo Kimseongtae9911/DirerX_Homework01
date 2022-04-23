@@ -18,7 +18,7 @@ class CPolygon
 {
 private:
 	int m_nVertices = 0;
-	std::unique_ptr<CVertex[]> m_pVertices = nullptr;
+	CVertex* m_pVertices = nullptr;
 
 public:
 	CPolygon() {}
@@ -26,7 +26,9 @@ public:
 	virtual ~CPolygon();
 
 	void SetVertex(int nIndex, CVertex& vertex);
-	CVertex* GetVertex() { return m_pVertices.get(); }
+	//void SetVertex(int nIndex, CVertex vertex);
+
+	CVertex* GetVertex() { return m_pVertices; }
 	int& GetVertexNum() { return m_nVertices; }
 };
 
@@ -37,8 +39,7 @@ private:
 
 protected :
 	int m_nPolygons = 0;
-	//CPolygon** m_ppPolygons = NULL;
-	std::shared_ptr<CPolygon* []> m_ppPolygons = NULL;
+	CPolygon** m_ppPolygons = NULL;
 
 public:
 	BoundingOrientedBox m_xmOOBB = BoundingOrientedBox();
@@ -53,7 +54,7 @@ public:
 	void Release() { m_nReferences--; if (m_nReferences <= 0) delete this; }
 
 public:
-	void SetPolygon(int nIndex, std::unique_ptr<CPolygon[]> pPolygon);
+	void SetPolygon(int nIndex, CPolygon* pPolygon);
 
 	virtual void Render(HDC hDCFrameBuffer);
 
@@ -61,3 +62,16 @@ public:
 	int CheckRayIntersection(XMVECTOR& xmvPickRayOrigin, XMVECTOR& xmvPickRayDirection, float* pfNearHitDistance);
 };
 
+class CRollerCoasterMesh : public CMesh
+{
+public:
+	CRollerCoasterMesh(float fWidth = 4.0f, float fHeight = 4.0f, float fDepth = 4.0f);
+	virtual ~CRollerCoasterMesh() {}
+};
+
+class CBackGroundMesh : public CMesh
+{
+public:
+	CBackGroundMesh(float fWidth = 4.0f, float fHeight = 4.0f, float fDepth = 4.0f, int nSubRects = 20);
+	virtual ~CBackGroundMesh() { }
+};

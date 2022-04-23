@@ -1,6 +1,7 @@
 #pragma once
 #include "Timer.h"
 #include "Player.h"
+#include "Scene.h"
 
 class CGameFramework
 {
@@ -20,7 +21,8 @@ private:
 
 private:
 	CGameTimer m_GameTimer;
-	std::unique_ptr<CPlayer> m_pPlayer = NULL;
+	CPlayer* m_pPlayer = NULL;
+	CScene* m_pScene = NULL;
 
 public:
 	void OnCreate(HINSTANCE hInstance, HWND hMainWnd);

@@ -14,6 +14,7 @@ private:
 	CGameObject** m_ppObjects = NULL;
 	
 	CPlayer* m_pPlayer = NULL;
+	CBackGroundObject* m_pBackGround = NULL;
 
 #ifdef _WITH_DRAW_AXIS
 	CGameObject* m_pWorldAxis = NULL;
