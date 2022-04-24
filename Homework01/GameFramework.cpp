@@ -83,7 +83,6 @@ void CGameFramework::BuildObjects()
 
     CRollerCoasterMesh* pRollerCMesh = new CRollerCoasterMesh(4.0f, 4.0f, 4.0f);
 
-
     m_pPlayer = new CRollerCoasterPlayer();
     m_pPlayer->SetPosition(0.0f, 0.0f, 0.0f);
     m_pPlayer->SetMesh(pRollerCMesh);
@@ -100,6 +99,21 @@ void CGameFramework::BuildObjects()
 
 void CGameFramework::ProcessInput()
 {
+    static UCHAR pKeyBuffer[256];
+    if (GetKeyboardState(pKeyBuffer))
+    {
+        DWORD dwDirection = 0;
+        if (pKeyBuffer[VK_UP] & 0xF0) dwDirection |= DIR_FORWARD;
+        if (pKeyBuffer[VK_DOWN] & 0xF0) dwDirection |= DIR_BACKWARD;
+        if (pKeyBuffer[VK_LEFT] & 0xF0) dwDirection |= DIR_LEFT;
+        if (pKeyBuffer[VK_RIGHT] & 0xF0) dwDirection |= DIR_RIGHT;
+        if (pKeyBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
+        if (pKeyBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
+
+        if (dwDirection) m_pPlayer->Move(dwDirection, 0.15f);
+    }
+
+    m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 }
 
 void CGameFramework::AnimateObjects()

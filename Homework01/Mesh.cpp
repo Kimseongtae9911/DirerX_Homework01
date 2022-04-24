@@ -190,14 +190,25 @@ CRollerCoasterMesh::CRollerCoasterMesh(float fWidth, float fHeight, float fDepth
     m_xmOOBB = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int nSubRects)
+CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int nSubRects) : CMesh((4 * nSubRects * nSubRects) + 2)
 {
-   /* float fHalfWidth = fWidth * 0.5f;
+    float fHalfWidth = fWidth * 0.5f;
     float fHalfHeight = fHeight * 0.5f;
     float fHalfDepth = fDepth * 0.5f;
     float fCellWidth = fWidth * (1.0f / nSubRects);
     float fCellHeight = fHeight * (1.0f / nSubRects);
     float fCellDepth = fDepth * (1.0f / nSubRects);
+
+    CVertex Vertex1 = CVertex(-fHalfWidth, -fHalfHeight + (0 * fCellHeight), -fHalfDepth + (0 * fCellDepth));
+    CVertex Vertex2 = CVertex(-fHalfWidth, -fHalfHeight + ((0 + 1) * fCellHeight), -fHalfDepth + (0 * fCellDepth));
+    CVertex Vertex3 = CVertex(-fHalfWidth, -fHalfHeight + ((0 + 1) * fCellHeight), -fHalfDepth + ((0 + 1) * fCellDepth));
+    CVertex Vertex4 = CVertex(-fHalfWidth, -fHalfHeight + (0 * fCellHeight), -fHalfDepth + ((0 + 1) * fCellDepth));
+
+    CVertex Vertex5 = CVertex(-fHalfWidth + (0 * fCellWidth), +fHalfHeight, -fHalfDepth + (0 * fCellDepth));
+    CVertex Vertex6 = CVertex(-fHalfWidth + ((0 + 1) * fCellWidth), +fHalfHeight, -fHalfDepth + (0 * fCellDepth));
+    CVertex Vertex7 = CVertex(-fHalfWidth + ((0 + 1) * fCellWidth), +fHalfHeight, -fHalfDepth + ((0 + 1) * fCellDepth));
+    CVertex Vertex8 = CVertex(-fHalfWidth + (0 * fCellWidth), +fHalfHeight, -fHalfDepth + ((0 + 1) * fCellDepth));
+    
 
     int k = 0;
     CPolygon* pLeftFace;
@@ -205,11 +216,21 @@ CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int 
     {
         for (int j = 0; j < nSubRects; j++)
         {
+            Vertex1.GetPos().y = -fHalfHeight + (i * fCellHeight);
+            Vertex1.GetPos().z = -fHalfDepth + (j * fCellDepth);
+            Vertex2.GetPos().y = -fHalfHeight + ((i + 1) * fCellHeight);
+            Vertex2.GetPos().z = -fHalfDepth + (j * fCellDepth);
+            Vertex3.GetPos().y = -fHalfHeight + ((i + 1) * fCellHeight);
+            Vertex3.GetPos().z = -fHalfDepth + ((j + 1) * fCellDepth);
+            Vertex4.GetPos().y = -fHalfHeight + (i * fCellHeight);
+            Vertex4.GetPos().z = -fHalfDepth + ((j + 1) * fCellDepth);
+
+
             pLeftFace = new CPolygon(4);
-            pLeftFace->SetVertex(0, CVertex(-fHalfWidth, -fHalfHeight + (i * fCellHeight), -fHalfDepth + (j * fCellDepth)));
-            pLeftFace->SetVertex(1, CVertex(-fHalfWidth, -fHalfHeight + ((i + 1) * fCellHeight), -fHalfDepth + (j * fCellDepth)));
-            pLeftFace->SetVertex(2, CVertex(-fHalfWidth, -fHalfHeight + ((i + 1) * fCellHeight), -fHalfDepth + ((j + 1) * fCellDepth)));
-            pLeftFace->SetVertex(3, CVertex(-fHalfWidth, -fHalfHeight + (i * fCellHeight), -fHalfDepth + ((j + 1) * fCellDepth)));
+            pLeftFace->SetVertex(0, Vertex1);
+            pLeftFace->SetVertex(1, Vertex2);
+            pLeftFace->SetVertex(2, Vertex3);
+            pLeftFace->SetVertex(3, Vertex4);
             SetPolygon(k++, pLeftFace);
         }
     }
@@ -219,11 +240,21 @@ CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int 
     {
         for (int j = 0; j < nSubRects; j++)
         {
+            Vertex1.GetPos().x = fHalfDepth, Vertex2.GetPos().x = fHalfDepth, Vertex3.GetPos().x = fHalfDepth, Vertex4.GetPos().x = fHalfDepth;
+            Vertex1.GetPos().y = -fHalfHeight + (i * fCellHeight);
+            Vertex1.GetPos().z = -fHalfDepth + (j * fCellDepth);
+            Vertex2.GetPos().y = -fHalfHeight + ((i + 1) * fCellHeight);
+            Vertex2.GetPos().z = -fHalfDepth + (j * fCellDepth);
+            Vertex3.GetPos().y = -fHalfHeight + ((i + 1) * fCellHeight);
+            Vertex3.GetPos().z = -fHalfDepth + ((j + 1) * fCellDepth);
+            Vertex4.GetPos().y = -fHalfHeight + (i * fCellHeight);
+            Vertex4.GetPos().z = -fHalfDepth + ((j + 1) * fCellDepth);
+
             pRightFace = new CPolygon(4);
-            pRightFace->SetVertex(0, CVertex(+fHalfWidth, -fHalfHeight + (i * fCellHeight), -fHalfDepth + (j * fCellDepth)));
-            pRightFace->SetVertex(1, CVertex(+fHalfWidth, -fHalfHeight + ((i + 1) * fCellHeight), -fHalfDepth + (j * fCellDepth)));
-            pRightFace->SetVertex(2, CVertex(+fHalfWidth, -fHalfHeight + ((i + 1) * fCellHeight), -fHalfDepth + ((j + 1) * fCellDepth)));
-            pRightFace->SetVertex(3, CVertex(+fHalfWidth, -fHalfHeight + (i * fCellHeight), -fHalfDepth + ((j + 1) * fCellDepth)));
+            pRightFace->SetVertex(0, Vertex1);
+            pRightFace->SetVertex(1, Vertex2);
+            pRightFace->SetVertex(2, Vertex3);
+            pRightFace->SetVertex(3, Vertex4);
             SetPolygon(k++, pRightFace);
         }
     }
@@ -233,11 +264,17 @@ CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int 
     {
         for (int j = 0; j < nSubRects; j++)
         {
+            Vertex5.GetPos().x = -fHalfWidth + (i * fCellWidth), Vertex7.GetPos().x = -fHalfWidth + (i * fCellWidth);
+            Vertex6.GetPos().x = -fHalfWidth + ((i + 1) * fCellWidth); Vertex8.GetPos().x = -fHalfWidth + ((i + 1) * fCellWidth);
+            
+            Vertex5.GetPos().z = -fHalfDepth + (j * fCellDepth), Vertex6.GetPos().z = -fHalfDepth + (j * fCellDepth);
+            Vertex7.GetPos().z = -fHalfDepth + ((j + 1) * fCellDepth), Vertex8.GetPos().z = -fHalfDepth + ((j + 1) * fCellDepth);
+
             pTopFace = new CPolygon(4);
-            pTopFace->SetVertex(0, CVertex(-fHalfWidth + (i * fCellWidth), +fHalfHeight, -fHalfDepth + (j * fCellDepth)));
-            pTopFace->SetVertex(1, CVertex(-fHalfWidth + ((i + 1) * fCellWidth), +fHalfHeight, -fHalfDepth + (j * fCellDepth)));
-            pTopFace->SetVertex(2, CVertex(-fHalfWidth + ((i + 1) * fCellWidth), +fHalfHeight, -fHalfDepth + ((j + 1) * fCellDepth)));
-            pTopFace->SetVertex(3, CVertex(-fHalfWidth + (i * fCellWidth), +fHalfHeight, -fHalfDepth + ((j + 1) * fCellDepth)));
+            pTopFace->SetVertex(0, Vertex5);
+            pTopFace->SetVertex(1, Vertex6);
+            pTopFace->SetVertex(2, Vertex7);
+            pTopFace->SetVertex(3, Vertex8);
             SetPolygon(k++, pTopFace);
         }
     }
@@ -247,28 +284,79 @@ CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int 
     {
         for (int j = 0; j < nSubRects; j++)
         {
+            Vertex5.GetPos().y *= -1;
+            Vertex6.GetPos().y *= -1;
+            Vertex7.GetPos().y *= -1;
+            Vertex8.GetPos().y *= -1;
+
             pBottomFace = new CPolygon(4);
-            pBottomFace->SetVertex(0, CVertex(-fHalfWidth + (i * fCellWidth), -fHalfHeight, -fHalfDepth + (j * fCellDepth)));
-            pBottomFace->SetVertex(1, CVertex(-fHalfWidth + ((i + 1) * fCellWidth), -fHalfHeight, -fHalfDepth + (j * fCellDepth)));
-            pBottomFace->SetVertex(2, CVertex(-fHalfWidth + ((i + 1) * fCellWidth), -fHalfHeight, -fHalfDepth + ((j + 1) * fCellDepth)));
-            pBottomFace->SetVertex(3, CVertex(-fHalfWidth + (i * fCellWidth), -fHalfHeight, -fHalfDepth + ((j + 1) * fCellDepth)));
+            pBottomFace->SetVertex(0, Vertex5);
+            pBottomFace->SetVertex(1, Vertex6);
+            pBottomFace->SetVertex(2, Vertex7);
+            pBottomFace->SetVertex(3, Vertex8);
             SetPolygon(k++, pBottomFace);
         }
     }
 
+    CVertex Vertex9 = CVertex(-fHalfWidth, +fHalfHeight, -fHalfDepth);
+    CVertex Vertex10 = CVertex(+fHalfWidth, +fHalfHeight, -fHalfDepth);
+    CVertex Vertex11 = CVertex(+fHalfWidth, -fHalfHeight, -fHalfDepth);
+    CVertex Vertex12 = CVertex(-fHalfWidth, -fHalfHeight, -fHalfDepth);
+
     CPolygon* pFrontFace = new CPolygon(4);
-    pFrontFace->SetVertex(0, CVertex(-fHalfWidth, +fHalfHeight, -fHalfDepth));
-    pFrontFace->SetVertex(1, CVertex(+fHalfWidth, +fHalfHeight, -fHalfDepth));
-    pFrontFace->SetVertex(2, CVertex(+fHalfWidth, -fHalfHeight, -fHalfDepth));
-    pFrontFace->SetVertex(3, CVertex(-fHalfWidth, -fHalfHeight, -fHalfDepth));
+    pFrontFace->SetVertex(0, Vertex9);
+    pFrontFace->SetVertex(1, Vertex10);
+    pFrontFace->SetVertex(2, Vertex11);
+    pFrontFace->SetVertex(3, Vertex12);
     SetPolygon(k++, pFrontFace);
 
+    Vertex9.GetPos().y *= -1;
+    Vertex10.GetPos().y *= -1;
+    Vertex11.GetPos().y *= -1;
+    Vertex12.GetPos().y *= -1;
+
     CPolygon* pBackFace = new CPolygon(4);
-    pBackFace->SetVertex(0, CVertex(-fHalfWidth, -fHalfHeight, +fHalfDepth));
-    pBackFace->SetVertex(1, CVertex(+fHalfWidth, -fHalfHeight, +fHalfDepth));
-    pBackFace->SetVertex(2, CVertex(+fHalfWidth, +fHalfHeight, +fHalfDepth));
-    pBackFace->SetVertex(3, CVertex(-fHalfWidth, +fHalfHeight, +fHalfDepth));
+    pBackFace->SetVertex(0, Vertex12);
+    pBackFace->SetVertex(1, Vertex11);
+    pBackFace->SetVertex(2, Vertex10);
+    pBackFace->SetVertex(3, Vertex9);
     SetPolygon(k++, pBackFace);
 
-    m_xmOOBB = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));*/
+    m_xmOOBB = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
+CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth) : CMesh(14)
+{
+    float fHalfWidth = fWidth * 0.5f;
+    float fHalfHeight = fHeight * 0.5f;
+    float fHalfDepth = fDepth * 0.5f;
+
+    float fMiddleWidth = 1.0f;
+    float fMiddleDepth = 0.5f;
+
+    int i = 0;
+
+    //top
+    CVertex FrontTopLeft1 = CVertex(fHalfWidth, fHalfHeight, -fHalfDepth);
+    CVertex FrontTopLeft2 = CVertex(fHalfWidth - 1.0f, fHalfHeight, -fHalfDepth);
+    CVertex BackTopLeft1 = CVertex(fHalfWidth, fHalfHeight, fHalfDepth);
+    CVertex BackTopLeft2 = CVertex(fHalfWidth - 1.0f, fHalfHeight, fHalfDepth);
+    
+    CVertex FrontTopRight1 = CVertex(-fHalfWidth + 1.0f, fHalfHeight, -fHalfDepth);
+    CVertex FrontTopRight2 = CVertex(-fHalfWidth, fHalfHeight, -fHalfDepth);
+    CVertex BackTopRight1 = CVertex(-fHalfWidth + 1.0f, fHalfHeight, fHalfDepth);
+    CVertex BackTopRight2 = CVertex(-fHalfWidth, fHalfHeight, fHalfDepth);
+
+    CVertex FrontTopMiddle1 = CVertex(-fMiddleWidth, fHalfHeight, -fHalfDepth);
+    CVertex FrontTopMiddle2 = CVertex(fMiddleWidth, fHalfHeight, -fHalfDepth);
+    CVertex BackTopMiddle1 = CVertex(fMiddleWidth, fHalfHeight, fHalfDepth);
+    CVertex BackTopMiddle2 = CVertex(-fMiddleWidth, fHalfHeight, fHalfDepth);
+
+    CPolygon* pFrontFace = new CPolygon(4);
+    pFrontFace->SetVertex(0, FrontTopLeft1);
+    pFrontFace->SetVertex(1, BackTopLeft1);
+    pFrontFace->SetVertex(2, BackTopLeft2);
+    pFrontFace->SetVertex(3, FrontTopLeft2);
+    SetPolygon(i, pFrontFace);
+
 }

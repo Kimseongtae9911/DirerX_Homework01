@@ -69,6 +69,13 @@ public:
 	virtual ~CRollerCoasterMesh() {}
 };
 
+class CRailMesh : public CMesh
+{
+public:
+	CRailMesh(float fWidth = 4.0f, float fHeight = 1.0f, float fDepth = 4.0f);
+	virtual ~CRailMesh() {}
+};
+
 class CBackGroundMesh : public CMesh
 {
 public:
