@@ -96,3 +96,16 @@ public:
 
 	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
 };
+
+class CRailObject : public CGameObject
+{
+public:
+	CRailObject() {}
+	virtual ~CRailObject() {}
+
+public:
+	BoundingOrientedBox	m_xmOOBBPlayerMoveCheck = BoundingOrientedBox();
+	XMFLOAT4 m_pxmf4WallPlanes[6] = {};
+
+	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
+};

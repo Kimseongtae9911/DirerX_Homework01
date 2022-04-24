@@ -190,3 +190,8 @@ void CBackGroundObject::Render(HDC hDCFrameBuffer, CCamera* pCamera)
 {
 	CGameObject::Render(hDCFrameBuffer, &m_xmf4x4World, m_pMesh);
 }
+
+void CRailObject::Render(HDC hDCFrameBuffer, CCamera* pCamera)
+{
+	CGameObject::Render(hDCFrameBuffer, &m_xmf4x4World, m_pMesh);
+}

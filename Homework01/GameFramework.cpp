@@ -89,6 +89,7 @@ void CGameFramework::BuildObjects()
     m_pPlayer->SetColor(RGB(255, 0, 0));
     m_pPlayer->SetCamera(pCamera);
     XMFLOAT3 xmf3Camoffset = { 0.0f, 6.0f, -15.0f };
+    //XMFLOAT3 xmf3Camoffset = { 0.0f, 6.0f, -1.0f };
     m_pPlayer->SetCameraOffset(xmf3Camoffset);
 
     m_pScene = new CScene(m_pPlayer);
