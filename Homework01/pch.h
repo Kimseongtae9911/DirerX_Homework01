@@ -46,6 +46,8 @@ using namespace DirectX::PackedVector;
 
 #define EPSILON					1.0e-6f
 
+enum class DIR{FORWARD, LEFT, RIGHT, UP, DOWN};
+
 inline bool IsZero(float fValue) { return((fabsf(fValue) < EPSILON)); }
 inline bool IsEqual(float fA, float fB) { return(::IsZero(fA - fB)); }
 

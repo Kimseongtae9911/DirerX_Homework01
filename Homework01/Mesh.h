@@ -72,7 +72,7 @@ public:
 class CRailMesh : public CMesh
 {
 public:
-	CRailMesh(float fWidth = 4.0f, float fHeight = 1.0f, float fDepth = 4.0f);
+	CRailMesh(float fWidth = 4.0f, float fHeight = 1.0f, float fDepth = 4.0f, DIR dir = DIR::FORWARD);
 	virtual ~CRailMesh() {}
 };
 
@@ -82,3 +82,20 @@ public:
 	CBackGroundMesh(float fWidth = 4.0f, float fHeight = 4.0f, float fDepth = 4.0f, int nSubRects = 20);
 	virtual ~CBackGroundMesh() { }
 };
+
+CVertex operator*(float f, CVertex& vertex) {
+	CVertex temp;
+	temp.GetPos().x = vertex.GetPos().x;
+	temp.GetPos().y = vertex.GetPos().y;
+	temp.GetPos().z = vertex.GetPos().z;
+
+	return temp;
+}
+CVertex operator+(CVertex lhs, CVertex rhs) {
+	CVertex temp;
+	temp.GetPos().x = lhs.GetPos().x + rhs.GetPos().x;
+	temp.GetPos().y = lhs.GetPos().y + rhs.GetPos().y;
+	temp.GetPos().z = lhs.GetPos().z + rhs.GetPos().z;
+
+	return temp;
+}
