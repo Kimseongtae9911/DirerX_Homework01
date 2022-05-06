@@ -319,7 +319,7 @@ CBackGroundMesh::CBackGroundMesh(float fWidth, float fHeight, float fDepth, int 
     m_xmOOBB = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
-CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh(12)
+CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh(1)
 {
     float fHalfWidth = fWidth * 0.5f;
     float fHalfHeight = fHeight * 0.5f;
@@ -329,7 +329,7 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
     float fMiddleDepth = 0.5f;
 
     int i = 0;
-    float radius = 10.0f;
+    float radius = 60.0f;
     float fT = 0.5;
     if (dir == DIR::FORWARD) {
         //top
@@ -490,15 +490,16 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
         CVertex RightPoint2 = CVertex(fHalfWidth - 1.0f, fHalfHeight, 0.0f);
 
         CPolygon* pTopRightFace = new CPolygon(50);
-        /*pTopLeftFace->SetVertex(0, FrontTopLeft2);
-        pTopLeftFace->SetVertex(1, FrontTopLeft1);
-        pTopLeftFace->SetVertex(2, BackTopLeft1);
-        pTopLeftFace->SetVertex(3, BackTopLeft2);*/
+ 
         for (int i = 0; i < 50; ++i) {
-            // (1 - t)^2P0 + 2t(1 - t)P1 + t^2P2
-            CVertex Point = pow(1 - fT, 2) * BackTopRight1 + 2 * fT * (1 - fT) * RightPoint1 + pow(fT, 2) * FrontTopRight2;
+            CVertex Point = GetBezier(BackTopRight1, RightPoint1, FrontTopRight1, fT);       
+           
             pTopRightFace->SetVertex(i, Point);
+        }
+        for (int i = 50; i < 100; ++i) {
+            CVertex Point = GetBezier(FrontTopRight2, RightPoint2, BackTopRight2, fT);
 
+            pTopRightFace->SetVertex(i, Point);
         }
         SetPolygon(i++, pTopRightFace);
     }
@@ -507,4 +508,18 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
     }
 
     m_xmOOBB = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));
+}
+
+inline CVertex GetBezier(const CVertex& p1, const CVertex& p2, const CVertex& p3, const float fT)
+{
+    CVertex temp;
+    float c1 = (1 - fT) * (1 - fT);
+    float c2 = 2 * (1 - fT) * fT;
+    float c3 = fT * fT;
+
+    temp.GetPos().x = c1 * p1.GetPos().x + c2 * p2.GetPos().x + c3 * p3.GetPos().x;
+    temp.GetPos().y = c1 * p1.GetPos().y + c2 * p2.GetPos().y + c3 * p3.GetPos().y;
+    temp.GetPos().z = c1 * p1.GetPos().z + c2 * p2.GetPos().z + c3 * p3.GetPos().z;
+
+    return temp;
 }

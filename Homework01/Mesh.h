@@ -11,7 +11,16 @@ public:
 	virtual ~CVertex() {}
 
 public:
-	XMFLOAT3& GetPos() { return m_xmf3Position; }
+	const XMFLOAT3& GetPos() const { return m_xmf3Position; }
+	void SetPos(float x, float y, float z) { m_xmf3Position.x = x; m_xmf3Position.y = y; m_xmf3Position.z = z;}
+
+public:
+	CVertex operator+(CVertex&& rhs) {
+		CVertex temp;
+		temp.SetPos(m_xmf3Position.x + rhs.GetPos().x, m_xmf3Position.y + rhs.GetPos().y, m_xmf3Position.z + rhs.GetPos().z);
+
+		return temp;
+	}
 };
 
 class CPolygon
@@ -83,19 +92,12 @@ public:
 	virtual ~CBackGroundMesh() { }
 };
 
-CVertex operator*(float f, CVertex& vertex) {
+inline CVertex operator*(float f, CVertex vertex) {
 	CVertex temp;
-	temp.GetPos().x = vertex.GetPos().x;
-	temp.GetPos().y = vertex.GetPos().y;
-	temp.GetPos().z = vertex.GetPos().z;
+
+	temp.SetPos(f * vertex.GetPos().x, f * vertex.GetPos().y, f * vertex.GetPos().z);
 
 	return temp;
 }
-CVertex operator+(CVertex lhs, CVertex rhs) {
-	CVertex temp;
-	temp.GetPos().x = lhs.GetPos().x + rhs.GetPos().x;
-	temp.GetPos().y = lhs.GetPos().y + rhs.GetPos().y;
-	temp.GetPos().z = lhs.GetPos().z + rhs.GetPos().z;
 
-	return temp;
-}
+inline CVertex GetBezier(const CVertex& p1, const CVertex& p2, const CVertex& p3, const float fT);

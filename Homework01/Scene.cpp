@@ -28,7 +28,7 @@ void CScene::BuildObjects()
 	m_pBackGround->m_pxmf4WallPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
 	m_pBackGround->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth * 0.05f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));*/
 	
-	CRailMesh* pRailMesh = new CRailMesh(4.0f, 1.0f, 4.0f, DIR::FORWARD);
+	CRailMesh* pRailMesh = new CRailMesh(4.0f, 1.0f, 4.0f, DIR::LEFT);
 	m_nObjects = 10;
 
 	m_ppObjects = new CGameObject * [m_nObjects];
