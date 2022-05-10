@@ -16,6 +16,11 @@ private:
 	CPlayer* m_pPlayer = NULL;
 	CBackGroundObject* m_pBackGround = NULL;
 
+private:
+	std::vector<int> m_vRail;
+	XMFLOAT3 m_xmf3RailPos = { 0.0f, 0.0f, 0.0f };
+	XMFLOAT3 m_xmf3RailAxis = { 0.0f, 0.0f, 0.0f };
+
 #ifdef _WITH_DRAW_AXIS
 	CGameObject* m_pWorldAxis = NULL;
 #endif
@@ -31,5 +36,8 @@ public:
 
 	virtual void OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
 	virtual void OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam);
+
+public:
+	void MakeRail();
 };
 

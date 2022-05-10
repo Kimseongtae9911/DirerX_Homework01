@@ -111,7 +111,12 @@ void CPlayer::Update(float fTimeElapsed)
 	float fDeceleration = m_fFriction * fTimeElapsed;
 	if (fDeceleration > fLength)
 		fDeceleration = fLength;
+	//std::cout << "xmf3Deceleration = " << xmf3Deceleration.x << ", " << xmf3Deceleration.y << ", " << xmf3Deceleration.z << std::endl;
+	//std::cout << "fDeceleration = " << fDeceleration << std::endl;
 	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Deceleration, fDeceleration);
+	//std::cout << m_pPlayer->GetVelocity().x << m_pPlayer->GetVelocity().y << m_pPlayer->GetVelocity().z << std::endl;
+	//std::cout << m_xmf3Velocity.x << m_xmf3Velocity.y << m_xmf3Velocity.z << std::endl;
+
 }
 
 void CPlayer::OnUpdateTransform()

@@ -58,6 +58,7 @@ public:
 	XMFLOAT3& GetUp() { return m_xmf3Up; }
 	XMFLOAT3& GetLook() { return m_xmf3Look; }
 	XMFLOAT3& GetCameraOffset() { return m_xmf3CameraOffset; }
+	const XMFLOAT3& GetVelocity() { return m_xmf3Velocity; }
 };
 
 class CRollerCoasterPlayer : public CPlayer

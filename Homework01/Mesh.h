@@ -12,6 +12,7 @@ public:
 
 public:
 	const XMFLOAT3& GetPos() const { return m_xmf3Position; }
+	XMFLOAT3& GetPos() { return m_xmf3Position; }
 	void SetPos(float x, float y, float z) { m_xmf3Position.x = x; m_xmf3Position.y = y; m_xmf3Position.z = z;}
 
 public:
@@ -100,4 +101,4 @@ inline CVertex operator*(float f, CVertex vertex) {
 	return temp;
 }
 
-inline CVertex GetBezier(const CVertex& p1, const CVertex& p2, const CVertex& p3, const float fT);
+inline CVertex GetBezier(const CVertex& p1, const CVertex& p2, const CVertex& p3, const float fT, CVertex& middle1, CVertex& middle2);

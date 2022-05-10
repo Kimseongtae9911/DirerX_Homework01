@@ -9,6 +9,7 @@ CScene::CScene(CPlayer* pPlayer)
 
 CScene::~CScene()
 {
+
 }
 
 void CScene::BuildObjects()
@@ -28,17 +29,7 @@ void CScene::BuildObjects()
 	m_pBackGround->m_pxmf4WallPlanes[5] = XMFLOAT4(0.0f, 0.0f, -1.0f, fHalfDepth);
 	m_pBackGround->m_xmOOBBPlayerMoveCheck = BoundingOrientedBox(XMFLOAT3(0.0f, 0.0f, 0.0f), XMFLOAT3(fHalfWidth, fHalfHeight, fHalfDepth * 0.05f), XMFLOAT4(0.0f, 0.0f, 0.0f, 1.0f));*/
 	
-	CRailMesh* pRailMesh = new CRailMesh(4.0f, 1.0f, 4.0f, DIR::LEFT);
-	m_nObjects = 10;
-
-	m_ppObjects = new CGameObject * [m_nObjects];
-
-	for (int i = 0; i < m_nObjects; ++i) {
-		m_ppObjects[i] = new CRailObject();
-		m_ppObjects[i]->SetMesh(pRailMesh);
-		m_ppObjects[i]->SetColor(RGB(0, 0, 255));
-		m_ppObjects[i]->SetPosition(0.0f, -2.0f, 4.0f * i);
-	}
+	MakeRail();
 
 #ifdef _WITH_DRAW_AXIS
 	m_pWorldAxis = new CGameObject();
@@ -131,4 +122,53 @@ void CScene::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM wParam,
 
 void CScene::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
+}
+
+void CScene::MakeRail()
+{
+	std::ifstream in("Rail.txt");
+
+	int n;
+
+	while (!in.eof()) {
+		in >> n;
+		m_vRail.push_back(n);
+	}
+
+	CRailMesh* pRailForwardMesh = new CRailMesh(4.0f, 1.0f, 4.0f, DIR::FORWARD);
+	CRailMesh* pRailLeftMesh = new CRailMesh(4.0f, 1.0f, 4.0f, DIR::LEFT);
+	CRailMesh* pRailRightMesh = new CRailMesh(4.0f, 1.0f, 4.0f, DIR::RIGHT);
+	m_nObjects = (int)m_vRail.size();
+
+	m_ppObjects = new CGameObject * [m_nObjects];
+
+	for (int i = 0; i < m_nObjects; ++i) {
+		m_ppObjects[i] = new CRailObject();
+		m_ppObjects[i]->SetColor(RGB(0, 0, 255));
+		switch (m_vRail[i])
+		{
+		case 0:		//forward
+			m_ppObjects[i]->SetMesh(pRailForwardMesh);
+			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			break;
+		case 1:		//left
+			m_ppObjects[i]->SetMesh(pRailLeftMesh);
+			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			break;
+		case 2:		//right
+			m_ppObjects[i]->SetMesh(pRailRightMesh);
+			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			break;
+		case 3:		//up
+			m_ppObjects[i]->SetMesh(pRailForwardMesh);
+			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			break;
+		case 4:		//down
+			m_ppObjects[i]->SetMesh(pRailForwardMesh);
+			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			break;
+		default:
+			break;
+		}
+	}
 }
