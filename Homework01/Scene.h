@@ -17,10 +17,11 @@ private:
 	CBackGroundObject* m_pBackGround = NULL;
 
 private:
-	std::vector<int> m_vRail;
+	std::vector<DIR> m_vRail;
+	int m_nLeftRail = 0;
 	XMFLOAT3 m_xmf3RailPos = { 0.0f, 0.0f, 0.0f };
 	XMFLOAT3 m_xmf3RailAxis = { 0.0f, 0.0f, 0.0f };
-	float m_fRailAngle = 0.0f;
+	XMFLOAT3 m_xmf3RailAngle = { 0.0f, 0.0f, 0.0f };
 
 #ifdef _WITH_DRAW_AXIS
 	CGameObject* m_pWorldAxis = NULL;
@@ -40,5 +41,7 @@ public:
 
 public:
 	void MakeRail();
+	void FindRailPos(int n);
+	const std::vector<DIR>& GetRail() { return m_vRail; }
 };
 

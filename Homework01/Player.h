@@ -24,6 +24,14 @@ private:
 	float m_fYaw = 0.0f;
 	float m_fRoll = 0.0f;
 
+private:
+	int m_nRailIndex = 0;
+	int m_nRailPos = 1;
+	bool m_bMove = false;
+
+protected:
+	std::vector<DIR> m_vRail;
+
 public:
 	CPlayer();
 	virtual ~CPlayer();
@@ -31,6 +39,7 @@ public:
 public:
 	void SetPosition(float x, float y, float z);
 	void SetRotation(float x, float y, float z);
+	void SetMove(bool bMove) { m_bMove = bMove; }
 
 	void LookAt(XMFLOAT3& xmf3LookAt, XMFLOAT3& xmf3Up);
 
@@ -42,6 +51,9 @@ public:
 	void SetCameraOffset(XMFLOAT3& xmf3CameraOffset);
 
 	void Update(float fTimeElapsed = 0.016f);
+
+	void GetRailFromFile();
+	void FollowRail();
 
 public:
 	virtual void OnUpdateTransform();
@@ -59,6 +71,7 @@ public:
 	XMFLOAT3& GetLook() { return m_xmf3Look; }
 	XMFLOAT3& GetCameraOffset() { return m_xmf3CameraOffset; }
 	const XMFLOAT3& GetVelocity() { return m_xmf3Velocity; }
+	const bool GetMove() { return m_bMove; }
 };
 
 class CRollerCoasterPlayer : public CPlayer
@@ -70,4 +83,6 @@ public:
 	virtual void OnUpdateTransform();
 	virtual void Animate(float fElapsedTime);
 	virtual void Render(HDC hDCFrameBuffer, CCamera* pCamera);
+
+
 };

@@ -3,6 +3,7 @@
 
 CPlayer::CPlayer()
 {
+	GetRailFromFile();
 }
 
 CPlayer::~CPlayer()
@@ -111,12 +112,110 @@ void CPlayer::Update(float fTimeElapsed)
 	float fDeceleration = m_fFriction * fTimeElapsed;
 	if (fDeceleration > fLength)
 		fDeceleration = fLength;
-	//std::cout << "xmf3Deceleration = " << xmf3Deceleration.x << ", " << xmf3Deceleration.y << ", " << xmf3Deceleration.z << std::endl;
-	//std::cout << "fDeceleration = " << fDeceleration << std::endl;
-	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Deceleration, fDeceleration);
-	//std::cout << m_pPlayer->GetVelocity().x << m_pPlayer->GetVelocity().y << m_pPlayer->GetVelocity().z << std::endl;
-	//std::cout << m_xmf3Velocity.x << m_xmf3Velocity.y << m_xmf3Velocity.z << std::endl;
 
+	m_xmf3Velocity = Vector3::Add(m_xmf3Velocity, xmf3Deceleration, fDeceleration);
+}
+
+void CPlayer::GetRailFromFile()
+{
+	std::ifstream in("Rail.txt");
+	int temp;
+
+	while (!in.eof()) {
+		in >> temp;
+		m_vRail.push_back((DIR)temp);
+	}
+}
+
+void CPlayer::FollowRail()
+{		
+	if (m_vRail[m_nRailIndex] == DIR::FORWARD) {
+		if (m_nRailIndex < m_vRail.size() - 1) {
+			if (m_vRail[m_nRailIndex + 1] == DIR::UP) {
+				Rotate(-2.4f, 0.0f, 0.0f);
+				m_nRailPos += 1;
+			}
+			else if (m_vRail[m_nRailIndex + 1] == DIR::DOWN) {
+				Rotate(2.4f, 0.0f, 0.0f);
+				Move(DIR_FORWARD, 0.16f);
+				m_nRailPos += 1;
+			}
+			else if (m_vRail[m_nRailIndex + 1] == DIR::LEFT) {
+				Rotate(0.0f, -1.8f, 0.0f);
+				Move(DIR_FORWARD, 0.22f);
+				m_nRailPos += 1;
+			}
+			else if (m_vRail[m_nRailIndex + 1] == DIR::RIGHT) {
+
+			}
+			else {
+				Move(DIR_FORWARD, 0.16f);
+				m_nRailPos += 1;
+			}
+		}
+		else {
+			Move(DIR_FORWARD, 0.16f);
+			m_nRailPos += 1;
+		}
+
+		if (m_nRailPos % 26 == 0) {
+			m_nRailIndex += 1;
+			m_nRailPos = 1;
+		}
+	}
+	else if (m_vRail[m_nRailIndex] == DIR::UP) {
+		if (m_nRailIndex < m_vRail.size() - 1) {
+			if (m_vRail[m_nRailIndex + 1] == DIR::FORWARD) {
+				Rotate(1.4f, 0.0f, 0.0f);
+				Move(DIR_FORWARD, 0.1f);
+				m_nRailPos += 1;
+			}
+			else {
+				Move(DIR_FORWARD, 0.1f);
+				m_nRailPos += 1;
+			}
+		}
+		else {
+			Move(DIR_FORWARD, 0.1f);
+			m_nRailPos += 1;
+		}
+
+		if (m_nRailPos % 41 == 0) {
+			m_nRailIndex += 1;
+			m_nRailPos = 1;
+			std::cout << m_nRailIndex << std::endl;
+		}
+	}
+	else if (m_vRail[m_nRailIndex] == DIR::DOWN) {
+		if (m_nRailIndex < m_vRail.size() - 1) {
+			if (m_vRail[m_nRailIndex + 1] == DIR::FORWARD) {
+				Rotate(1.4f, 0.0f, 0.0f);
+				Move(DIR_FORWARD, 0.1f);
+				m_nRailPos += 1;
+			}
+			else {
+				Move(DIR_FORWARD, 0.5f);
+				m_nRailPos += 1;
+			}
+		}
+		else {
+			Move(DIR_FORWARD, 0.5f);
+			m_nRailPos += 1;
+		}
+
+		if (m_nRailPos % 9 == 0) {
+			m_nRailIndex += 1;
+			m_nRailPos = 1;
+			std::cout << m_nRailIndex << std::endl;
+		}
+	}
+	else if (m_vRail[m_nRailIndex] == DIR::LEFT) {
+		Move(DIR_RIGHT, 0.1f);
+		m_nRailIndex += 1;
+	}
+	else if (m_vRail[m_nRailIndex] == DIR::RIGHT) {
+
+	}
 }
 
 void CPlayer::OnUpdateTransform()

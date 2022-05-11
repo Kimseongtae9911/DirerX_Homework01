@@ -110,9 +110,12 @@ void CGameFramework::ProcessInput()
         if (pKeyBuffer[VK_RIGHT] & 0xF0) dwDirection |= DIR_RIGHT;
         if (pKeyBuffer[VK_PRIOR] & 0xF0) dwDirection |= DIR_UP;
         if (pKeyBuffer[VK_NEXT] & 0xF0) dwDirection |= DIR_DOWN;
+        if (pKeyBuffer[VK_SPACE] & 0xF0) m_pPlayer->SetMove(true);
 
         if (dwDirection) m_pPlayer->Move(dwDirection, 0.15f);
     }
+    if (m_pPlayer->GetMove())
+        m_pPlayer->FollowRail();
 
     m_pPlayer->Update(m_GameTimer.GetTimeElapsed());
 }
@@ -163,6 +166,8 @@ void CGameFramework::OnProcessingMouseMessage(HWND hWnd, UINT nMessageID, WPARAM
 
 void CGameFramework::OnProcessingKeyboardMessage(HWND hWnd, UINT nMessageID, WPARAM wParam, LPARAM lParam)
 {
+    if (m_pScene)
+        m_pScene->OnProcessingKeyboardMessage(hWnd, nMessageID, wParam, lParam);
     switch (nMessageID)
     {
     case WM_KEYDOWN:

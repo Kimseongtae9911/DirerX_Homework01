@@ -481,7 +481,7 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
         CVertex BackTopRight1(fHalfWidth, fHalfHeight, -fHalfDepth);
         CVertex BackTopRight2(fHalfWidth - 1.0f, fHalfHeight, -fHalfDepth );
         CVertex FrontTopRight1(fHalfWidth - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
-        CVertex FrontTopRight2(fHalfWidth - 1.0f - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth - tan(DegreeToRadian(radius)));
+        CVertex FrontTopRight2(fHalfWidth - 0.70f - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth - 0.65f);
 
         CVertex RightPoint1(fHalfWidth, fHalfHeight, 0.0f);
         CVertex RightPoint2(fHalfWidth - 1.0f, fHalfHeight, 0.0f);
@@ -507,11 +507,11 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
 
         CVertex BackTopLeft1(-fHalfWidth + 1.0f, fHalfHeight, -fHalfDepth);
         CVertex BackTopLeft2(-fHalfWidth, fHalfHeight, -fHalfDepth);
-        CVertex FrontTopLeft1(-fHalfWidth + 1.0f - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth - 3 * tan(DegreeToRadian(radius)));
-        CVertex FrontTopLeft2(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth - 4 * tan(DegreeToRadian(radius)));
+        CVertex FrontTopLeft1(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)) + 1.9f, fHalfHeight, fHalfDepth - 2.1f);
+        CVertex FrontTopLeft2(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)) + 1.2f, fHalfHeight, fHalfDepth - 2.8f);
 
-        CVertex LeftPoint1(-fHalfWidth + 1.0f, fHalfHeight, 0.0f);
-        CVertex LeftPoint2(-fHalfWidth, fHalfHeight, 0.0f);
+        CVertex LeftPoint1(-fHalfWidth + 0.8f, fHalfHeight, -1.0f);
+        CVertex LeftPoint2(-fHalfWidth - 0.2f, fHalfHeight, -1.0f);
 
         CPolygon* pTopLeftFace = new CPolygon(102);
         for (int i = 0; i < 51; ++i) {
@@ -540,7 +540,7 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
         CVertex BackBottomRight1(fHalfWidth, -fHalfHeight, -fHalfDepth);
         CVertex BackBottomRight2(fHalfWidth - 1.0f, -fHalfHeight, -fHalfDepth);
         CVertex FrontBottomRight1(fHalfWidth - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
-        CVertex FrontBottomRight2(fHalfWidth - 1.0f - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth - tan(DegreeToRadian(radius)));
+        CVertex FrontBottomRight2(fHalfWidth - 0.70f - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth - 0.65f);
 
         CVertex RightPoint3(fHalfWidth, -fHalfHeight, 0.0f);
         CVertex RightPoint4(fHalfWidth - 1.0f, -fHalfHeight, 0.0f);
@@ -566,11 +566,11 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
 
         CVertex BackBottomLeft1(-fHalfWidth + 1.0f, -fHalfHeight, -fHalfDepth);
         CVertex BackBottomLeft2(-fHalfWidth, -fHalfHeight, -fHalfDepth);
-        CVertex FrontBottomLeft1(-fHalfWidth + 1.0f - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth - 3 * tan(DegreeToRadian(radius)));
-        CVertex FrontBottomLeft2(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth - 4 * tan(DegreeToRadian(radius)));
+        CVertex FrontBottomLeft1(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)) + 1.9f, -fHalfHeight, fHalfDepth - 2.1f);
+        CVertex FrontBottomLeft2(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)) + 1.2f, -fHalfHeight, fHalfDepth - 2.8f);
 
-        CVertex LeftPoint3(-fHalfWidth + 1.0f, -fHalfHeight, 0.0f);
-        CVertex LeftPoint4(-fHalfWidth, -fHalfHeight, 0.0f);
+        CVertex LeftPoint3(-fHalfWidth + 0.8f, -fHalfHeight, -1.0f);
+        CVertex LeftPoint4(-fHalfWidth - 0.2f, -fHalfHeight, -1.0f);
 
         CPolygon* pBottomLeftFace = new CPolygon(102);
         for (int i = 0; i < 51; ++i) {
@@ -821,10 +821,10 @@ inline CVertex GetBezier(const CVertex& p1, const CVertex& p2, const CVertex& p3
                 c1 * p1.GetPos().y + c2 * p2.GetPos().y + c3 * p3.GetPos().y,
                 c1 * p1.GetPos().z + c2 * p2.GetPos().z + c3 * p3.GetPos().z);
 
-    if (IsEqual(fT, 0.38f)) {
+    if (IsEqual(fT, 0.24f)) {
         middle1 = temp;
     }
-    else if (IsEqual(fT, 0.60f)) {
+    else if (IsEqual(fT, 0.48f)) {
         middle2 = temp;
     }
     return temp;
