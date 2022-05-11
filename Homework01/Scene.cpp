@@ -160,10 +160,10 @@ void CScene::MakeRail()
 			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
 			if (!IsEqual(m_fRailAngle, 0))
 				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_fRailAngle);
-			m_xmf3RailPos.z += 4.0f;
-			m_xmf3RailPos.x -= 2.0f;
+			m_xmf3RailPos.z += 2.0f;
+			m_xmf3RailPos.x -= 3.5f;
 			m_xmf3RailAxis.y = 1.0f;
-			m_fRailAngle -= 30.0f;
+			m_fRailAngle -= 35.0f;
 			break;
 		case 2:		//right
 			m_ppObjects[i]->SetMesh(pRailRightMesh);
