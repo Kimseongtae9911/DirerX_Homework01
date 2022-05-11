@@ -319,7 +319,7 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
     float fMiddleDepth = 0.5f;
 
     int i = 0;
-    float radius = 60.0f;
+    float radius = 30.0f;
     float fT = 0.5;
     if (dir == DIR::FORWARD) {
         //top
@@ -480,8 +480,8 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
         //Top
         CVertex BackTopRight1(fHalfWidth, fHalfHeight, -fHalfDepth);
         CVertex BackTopRight2(fHalfWidth - 1.0f, fHalfHeight, -fHalfDepth );
-        CVertex FrontTopRight1(fHalfWidth - fHalfWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
-        CVertex FrontTopRight2(fHalfWidth - 1.0f - fHalfWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
+        CVertex FrontTopRight1(fHalfWidth - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
+        CVertex FrontTopRight2(fHalfWidth - 1.0f - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
 
         CVertex RightPoint1(fHalfWidth, fHalfHeight, 0.0f);
         CVertex RightPoint2(fHalfWidth - 1.0f, fHalfHeight, 0.0f);
@@ -507,8 +507,8 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
 
         CVertex BackTopLeft1(-fHalfWidth + 1.0f, fHalfHeight, -fHalfDepth);
         CVertex BackTopLeft2(-fHalfWidth, fHalfHeight, -fHalfDepth);
-        CVertex FrontTopLeft1(-fHalfWidth + 1.0f - fHalfWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
-        CVertex FrontTopLeft2(-fHalfWidth - fHalfWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
+        CVertex FrontTopLeft1(-fHalfWidth + 1.0f - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
+        CVertex FrontTopLeft2(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)), fHalfHeight, fHalfDepth);
 
         CVertex LeftPoint1(-fHalfWidth + 1.0f, fHalfHeight, 0.0f);
         CVertex LeftPoint2(-fHalfWidth, fHalfHeight, 0.0f);
@@ -539,8 +539,8 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
         //Bottom
         CVertex BackBottomRight1(fHalfWidth, -fHalfHeight, -fHalfDepth);
         CVertex BackBottomRight2(fHalfWidth - 1.0f, -fHalfHeight, -fHalfDepth);
-        CVertex FrontBottomRight1(fHalfWidth - fHalfWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
-        CVertex FrontBottomRight2(fHalfWidth - 1.0f - fHalfWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
+        CVertex FrontBottomRight1(fHalfWidth - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
+        CVertex FrontBottomRight2(fHalfWidth - 1.0f - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
 
         CVertex RightPoint3(fHalfWidth, -fHalfHeight, 0.0f);
         CVertex RightPoint4(fHalfWidth - 1.0f, -fHalfHeight, 0.0f);
@@ -566,8 +566,8 @@ CRailMesh::CRailMesh(float fWidth, float fHeight, float fDepth, DIR dir) : CMesh
 
         CVertex BackBottomLeft1(-fHalfWidth + 1.0f, -fHalfHeight, -fHalfDepth);
         CVertex BackBottomLeft2(-fHalfWidth, -fHalfHeight, -fHalfDepth);
-        CVertex FrontBottomLeft1(-fHalfWidth + 1.0f - fHalfWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
-        CVertex FrontBottomLeft2(-fHalfWidth - fHalfWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
+        CVertex FrontBottomLeft1(-fHalfWidth + 1.0f - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
+        CVertex FrontBottomLeft2(-fHalfWidth - fWidth * sin(DegreeToRadian(radius)), -fHalfHeight, fHalfDepth);
 
         CVertex LeftPoint3(-fHalfWidth + 1.0f, -fHalfHeight, 0.0f);
         CVertex LeftPoint4(-fHalfWidth, -fHalfHeight, 0.0f);

@@ -5,6 +5,7 @@
 CScene::CScene(CPlayer* pPlayer)
 {
 	m_pPlayer = pPlayer;
+	m_xmf3RailPos = { 0.0f, -2.5f, 4.0f };
 }
 
 CScene::~CScene()
@@ -149,11 +150,20 @@ void CScene::MakeRail()
 		{
 		case 0:		//forward
 			m_ppObjects[i]->SetMesh(pRailForwardMesh);
-			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
+			if(!IsEqual(m_fRailAngle, 0))
+				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_fRailAngle);
+			m_xmf3RailPos.z += 4.0f;
 			break;
 		case 1:		//left
 			m_ppObjects[i]->SetMesh(pRailLeftMesh);
-			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
+			if (!IsEqual(m_fRailAngle, 0))
+				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_fRailAngle);
+			m_xmf3RailPos.z += 4.0f;
+			m_xmf3RailPos.x -= 2.0f;
+			m_xmf3RailAxis.y = 1.0f;
+			m_fRailAngle -= 30.0f;
 			break;
 		case 2:		//right
 			m_ppObjects[i]->SetMesh(pRailRightMesh);

@@ -20,6 +20,7 @@ private:
 	std::vector<int> m_vRail;
 	XMFLOAT3 m_xmf3RailPos = { 0.0f, 0.0f, 0.0f };
 	XMFLOAT3 m_xmf3RailAxis = { 0.0f, 0.0f, 0.0f };
+	float m_fRailAngle = 0.0f;
 
 #ifdef _WITH_DRAW_AXIS
 	CGameObject* m_pWorldAxis = NULL;
