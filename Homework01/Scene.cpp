@@ -175,46 +175,27 @@ void CScene::MakeRail()
 		case DIR::FORWARD:		//forward
 			m_ppObjects[i]->SetMesh(pRailForwardMesh);
 			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
-			if (!IsZero(m_xmf3RailAngle.x))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.x);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.y);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.z);
+			m_ppObjects[i]->Rotate(m_xmf3RailAngle.x, m_xmf3RailAngle.y, m_xmf3RailAngle.z);
 			break;
 		case DIR::LEFT:		//left
 			m_ppObjects[i]->SetMesh(pRailLeftMesh);
 			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
-			if (!IsZero(m_xmf3RailAngle.x))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.x);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.y);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.z);
+			m_ppObjects[i]->Rotate(m_xmf3RailAngle.x, m_xmf3RailAngle.y, m_xmf3RailAngle.z);
 			break;
 		case DIR::RIGHT:		//right
 			m_ppObjects[i]->SetMesh(pRailRightMesh);
 			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			m_ppObjects[i]->Rotate(m_xmf3RailAngle.x, m_xmf3RailAngle.y, m_xmf3RailAngle.z);
 			break;
 		case DIR::UP:		//up
 			m_ppObjects[i]->SetMesh(pRailForwardMesh);
 			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
-			if (!IsZero(m_xmf3RailAngle.x))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.x);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.y);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.z);
+			m_ppObjects[i]->Rotate(m_xmf3RailAngle.x, m_xmf3RailAngle.y, m_xmf3RailAngle.z);
 			break;
 		case DIR::DOWN:		//down
 			m_ppObjects[i]->SetMesh(pRailForwardMesh);
 			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
-			if (!IsZero(m_xmf3RailAngle.x))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.x);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.y);
-			if (!IsZero(m_xmf3RailAngle.y))
-				m_ppObjects[i]->Rotate(m_xmf3RailAxis, m_xmf3RailAngle.z);
+			m_ppObjects[i]->Rotate(m_xmf3RailAngle.x, m_xmf3RailAngle.y, m_xmf3RailAngle.z);
 			break;
 		default:
 			break;
@@ -238,14 +219,17 @@ void CScene::FindRailPos(int n)
 	}
 	else if(m_vRail[n] == DIR::UP && m_vRail[n - 1] == DIR::FORWARD)
 	{
-		m_xmf3RailAxis = { 1.0f, 0.0f, 0.0f };
 		m_xmf3RailAngle.x = -60.0f;
 		m_xmf3RailPos.y += 2 * sin(DegreeToRadian(-m_xmf3RailAngle.x)) + 0.17f;
 		m_xmf3RailPos.z += 2 + 2 * cos(DegreeToRadian(m_xmf3RailAngle.x)) + 0.5f;
+		if (m_nLeftRail) {
+			m_xmf3RailPos.x += 0.2f;
+			m_xmf3RailPos.y += 0.2f;
+			m_xmf3RailPos.z -= 0.1f;
+		}
 	}
 	else if (m_vRail[n] == DIR::DOWN && m_vRail[n - 1] == DIR::FORWARD)
 	{
-		m_xmf3RailAxis = { 1.0f, 0.0f, 0.0f };
 		m_xmf3RailAngle.x = 60.0f;
 		m_xmf3RailPos.y -= 2 * sin(DegreeToRadian(m_xmf3RailAngle.x)) - 0.17f;
 		m_xmf3RailPos.z += 2 + 2 * cos(DegreeToRadian(m_xmf3RailAngle.x)) - 0.5f;
@@ -262,7 +246,6 @@ void CScene::FindRailPos(int n)
 	{
 		m_xmf3RailPos.z += 2.0f + 2 * cos(DegreeToRadian(m_xmf3RailAngle.x)) - sin(DegreeToRadian(30.0f));
 		m_xmf3RailPos.y += 2 * sin(DegreeToRadian(-m_xmf3RailAngle.x)) - 0.78f + sin(DegreeToRadian(30.0f));
-		m_xmf3RailAxis = { 0.0f, 0.0f, 0.0f };
 		m_xmf3RailAngle.x = 0.0f;
 	}
 	else if (m_vRail[n] == DIR::UP && m_vRail[n - 1] == DIR::UP)
@@ -279,13 +262,11 @@ void CScene::FindRailPos(int n)
 	{
 		m_xmf3RailPos.z += 2.95f + 2 * cos(DegreeToRadian(-m_xmf3RailAngle.x)) - sin(DegreeToRadian(30.0f));
 		m_xmf3RailPos.y -= 2 * sin(DegreeToRadian(m_xmf3RailAngle.x)) - 0.78f + 1.0f;
-		m_xmf3RailAxis = { 0.0f, 0.0f, 0.0f };
 		m_xmf3RailAngle.x = 0.0f;
 	}
 	else if (m_vRail[n] == DIR::FORWARD && m_vRail[n - 1] == DIR::LEFT)
 	{
 		++m_nLeftRail;
-		m_xmf3RailAxis = { 0.0f, 1.0f, 0.0f };
 		m_xmf3RailAngle.y = m_nLeftRail * -45.0f;
 		m_xmf3RailPos.x -= 2 * 2 * sin(DegreeToRadian(-m_xmf3RailAngle.y));
 		m_xmf3RailPos.z += 2 * 2 * cos(DegreeToRadian(m_xmf3RailAngle.y)) - 0.8f;

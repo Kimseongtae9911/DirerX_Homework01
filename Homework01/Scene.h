@@ -20,7 +20,6 @@ private:
 	std::vector<DIR> m_vRail;
 	int m_nLeftRail = 0;
 	XMFLOAT3 m_xmf3RailPos = { 0.0f, 0.0f, 0.0f };
-	XMFLOAT3 m_xmf3RailAxis = { 0.0f, 0.0f, 0.0f };
 	XMFLOAT3 m_xmf3RailAngle = { 0.0f, 0.0f, 0.0f };
 
 #ifdef _WITH_DRAW_AXIS
