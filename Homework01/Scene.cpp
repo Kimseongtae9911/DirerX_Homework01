@@ -184,7 +184,7 @@ void CScene::MakeRail()
 			break;
 		case DIR::RIGHT:		//right
 			m_ppObjects[i]->SetMesh(pRailRightMesh);
-			m_ppObjects[i]->SetPosition(0.0f, -2.5f, 4.0f * i);
+			m_ppObjects[i]->SetPosition(m_xmf3RailPos);
 			m_ppObjects[i]->Rotate(m_xmf3RailAngle.x, m_xmf3RailAngle.y, m_xmf3RailAngle.z);
 			break;
 		case DIR::UP:		//up
@@ -223,9 +223,9 @@ void CScene::FindRailPos(int n)
 		m_xmf3RailPos.y += 2 * sin(DegreeToRadian(-m_xmf3RailAngle.x)) + 0.17f;
 		m_xmf3RailPos.z += 2 + 2 * cos(DegreeToRadian(m_xmf3RailAngle.x)) + 0.5f;
 		if (m_nLeftRail) {
-			m_xmf3RailPos.x += 0.2f;
-			m_xmf3RailPos.y += 0.2f;
-			m_xmf3RailPos.z -= 0.1f;
+			m_xmf3RailPos.x += 0.45f;
+			m_xmf3RailPos.y += 0.15f;
+			m_xmf3RailPos.z += 0.1f;
 		}
 	}
 	else if (m_vRail[n] == DIR::DOWN && m_vRail[n - 1] == DIR::FORWARD)
@@ -233,6 +233,11 @@ void CScene::FindRailPos(int n)
 		m_xmf3RailAngle.x = 60.0f;
 		m_xmf3RailPos.y -= 2 * sin(DegreeToRadian(m_xmf3RailAngle.x)) - 0.17f;
 		m_xmf3RailPos.z += 2 + 2 * cos(DegreeToRadian(m_xmf3RailAngle.x)) - 0.5f;
+		if (m_nLeftRail) {
+			m_xmf3RailPos.x += 1.0f;
+			m_xmf3RailPos.y += 0.1f;
+			m_xmf3RailPos.z += 0.4f;
+		}
 	}
 	else if (m_vRail[n] == DIR::LEFT && m_vRail[n - 1] == DIR::FORWARD)
 	{
@@ -247,16 +252,31 @@ void CScene::FindRailPos(int n)
 		m_xmf3RailPos.z += 2.0f + 2 * cos(DegreeToRadian(m_xmf3RailAngle.x)) - sin(DegreeToRadian(30.0f));
 		m_xmf3RailPos.y += 2 * sin(DegreeToRadian(-m_xmf3RailAngle.x)) - 0.78f + sin(DegreeToRadian(30.0f));
 		m_xmf3RailAngle.x = 0.0f;
+		if (m_nLeftRail) {
+			m_xmf3RailPos.x += 1.0f;
+			m_xmf3RailPos.y += 0.1f;
+			m_xmf3RailPos.z += 0.4f;
+		}
 	}
 	else if (m_vRail[n] == DIR::UP && m_vRail[n - 1] == DIR::UP)
 	{
 		m_xmf3RailPos.y += 2 * 2 * sin(DegreeToRadian(-m_xmf3RailAngle.x));
 		m_xmf3RailPos.z += 2 * 2 * cos(DegreeToRadian(m_xmf3RailAngle.x));
+		if (m_nLeftRail) {
+			m_xmf3RailPos.x += 1.4f;
+			m_xmf3RailPos.y += 0.0f;
+			m_xmf3RailPos.z += 0.6f;
+		}
 	}
 	else if (m_vRail[n] == DIR::DOWN && m_vRail[n - 1] == DIR::DOWN)
 	{
 		m_xmf3RailPos.y -= 2 * 2 * sin(DegreeToRadian(m_xmf3RailAngle.x));
 		m_xmf3RailPos.z += 2 * 2 * cos(DegreeToRadian(m_xmf3RailAngle.x));
+		if (m_nLeftRail) {
+			m_xmf3RailPos.x += 1.4f;
+			m_xmf3RailPos.y += 0.0f;
+			m_xmf3RailPos.z += 0.6f;
+		}
 	}
 	else if (m_vRail[n] == DIR::FORWARD && m_vRail[n - 1] == DIR::DOWN)
 	{
@@ -271,7 +291,6 @@ void CScene::FindRailPos(int n)
 		m_xmf3RailPos.x -= 2 * 2 * sin(DegreeToRadian(-m_xmf3RailAngle.y));
 		m_xmf3RailPos.z += 2 * 2 * cos(DegreeToRadian(m_xmf3RailAngle.y)) - 0.8f;
 		
-
 		//m_xmf3RailPos.z += 2.4f;
 		//m_xmf3RailPos.x -= 2.9f;
 		//m_xmf3RailAxis = { 0.0f, 1.0f, 0.0f };

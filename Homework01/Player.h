@@ -28,6 +28,7 @@ private:
 	int m_nRailIndex = 0;
 	int m_nRailPos = 1;
 	bool m_bMove = false;
+	int m_nLeftRail = 0;
 
 protected:
 	std::vector<DIR> m_vRail;

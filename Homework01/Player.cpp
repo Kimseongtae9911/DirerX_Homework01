@@ -151,6 +151,8 @@ void CPlayer::FollowRail()
 			else {
 				Move(DIR_FORWARD, 0.16f);
 				m_nRailPos += 1;
+				if (m_nLeftRail)
+					Move(DIR_LEFT, 0.002f);
 			}
 		}
 		else {
@@ -167,8 +169,10 @@ void CPlayer::FollowRail()
 		if (m_nRailIndex < m_vRail.size() - 1) {
 			if (m_vRail[m_nRailIndex + 1] == DIR::FORWARD) {
 				Rotate(1.4f, 0.0f, 0.0f);
-				Move(DIR_FORWARD, 0.1f);
+				Move(DIR_FORWARD, 0.15f);
 				m_nRailPos += 1;
+				if(m_nLeftRail)
+					Move(DIR_LEFT, 0.002f);
 			}
 			else {
 				Move(DIR_FORWARD, 0.1f);
@@ -212,6 +216,7 @@ void CPlayer::FollowRail()
 	else if (m_vRail[m_nRailIndex] == DIR::LEFT) {
 		Move(DIR_RIGHT, 0.1f);
 		m_nRailIndex += 1;
+		m_nLeftRail += 1;
 	}
 	else if (m_vRail[m_nRailIndex] == DIR::RIGHT) {
 
